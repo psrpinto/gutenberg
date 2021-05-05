@@ -49,7 +49,6 @@ function gutenberg_experimental_global_styles_get_stylesheet( $tree, $type = 'al
  */
 function gutenberg_experimental_global_styles_enqueue_assets() {
 	if (
-		! get_theme_support( 'experimental-link-color' ) && // link color support needs the presets CSS variables regardless of the presence of theme.json file.
 		! WP_Theme_JSON_Resolver::theme_has_support() ) {
 		return;
 	}
@@ -125,8 +124,7 @@ function gutenberg_experimental_global_styles_settings( $settings ) {
 		$settings['__experimentalGlobalStylesUserEntityId'] = $user_cpt_id;
 		$settings['__experimentalGlobalStylesBaseStyles']   = $base_styles;
 	} elseif (
-		WP_Theme_JSON_Resolver::theme_has_support() ||
-		get_theme_support( 'experimental-link-color' ) // link color support needs the presets CSS variables regardless of the presence of theme.json file.
+		WP_Theme_JSON_Resolver::theme_has_support()
 	) {
 		// STEP 3 - ADD STYLES IF THEME HAS SUPPORT
 		//
