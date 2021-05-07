@@ -7,6 +7,7 @@ import { keyBy, omit } from 'lodash';
  * WordPress dependencies
  */
 import { serialize } from '@wordpress/blocks';
+import { NEW_TAB_TARGET_ATTRIBUTE } from '@wordpress/menus';
 
 /**
  * Internal dependencies
@@ -16,8 +17,6 @@ import {
 	getPendingActions,
 	isProcessingPost,
 } from './controls';
-
-import { NEW_TAB_TARGET_ATTRIBUTE } from '../constants';
 
 /**
  * A WP nav_menu_item object.
