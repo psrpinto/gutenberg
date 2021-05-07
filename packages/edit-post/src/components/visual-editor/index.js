@@ -32,7 +32,7 @@ import {
 import { useRef } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { useMergeRefs, useRefEffect } from '@wordpress/compose';
+import { useMergeRefs } from '@wordpress/compose';
 import { arrowLeft } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
 
@@ -107,6 +107,14 @@ export default function VisualEditor( { styles } ) {
 		display: 'flex',
 		flexFlow: 'column',
 	};
+	const templateModeStyles = {
+		...desktopCanvasStyles,
+		// Same border as device preview.
+		borderRadius: '2px 2px 0 0',
+		border: '1px solid #ddd',
+		borderBottom: 0,
+		margin: '36px auto 0',
+	};
 	const resizedCanvasStyles = useResizeCanvas( deviceType, isTemplateMode );
 	const defaultLayout = useEditorFeature( 'layout' );
 	const { contentSize, wideSize } = defaultLayout || {};
@@ -115,9 +123,12 @@ export default function VisualEditor( { styles } ) {
 			? [ 'wide', 'full' ]
 			: [ 'left', 'center', 'right' ];
 
-	const animatedStyles = resizedCanvasStyles
-		? resizedCanvasStyles
+	let animatedStyles = isTemplateMode
+		? templateModeStyles
 		: desktopCanvasStyles;
+	if ( resizedCanvasStyles ) {
+		animatedStyles = resizedCanvasStyles;
+	}
 
 	let paddingBottom;
 
@@ -138,19 +149,6 @@ export default function VisualEditor( { styles } ) {
 	] );
 
 	const blockSelectionClearerRef = useBlockSelectionClearer( true );
-
-	// Allow scrolling "through" popovers over the canvas. This is only called
-	// for as long as the pointer is over a popover. Do not use React events
-	// because it will bubble through portals.
-	const toolWrapperRef = useRefEffect( ( node ) => {
-		function onWheel( { deltaX, deltaY } ) {
-			ref.current.scrollBy( deltaX, deltaY );
-		}
-		node.addEventListener( 'wheel', onWheel );
-		return () => {
-			node.removeEventListener( 'wheel', onWheel );
-		};
-	}, [] );
 
 	return (
 		<motion.div
@@ -181,54 +179,48 @@ export default function VisualEditor( { styles } ) {
 					{ __( 'Back' ) }
 				</Button>
 			) }
-			<div
-				className="edit-post-visual-editor__block-tools-wrapper"
-				ref={ toolWrapperRef }
-			>
-				<BlockTools>
-					<motion.div
-						ref={ toolWrapperRef }
-						animate={ animatedStyles }
-						initial={ desktopCanvasStyles }
+			<BlockTools __unstableContentRef={ ref }>
+				<motion.div
+					animate={ animatedStyles }
+					initial={ desktopCanvasStyles }
+				>
+					<MaybeIframe
+						isTemplateMode={ isTemplateMode }
+						contentRef={ contentRef }
+						styles={ styles }
+						style={ { paddingBottom } }
 					>
-						<MaybeIframe
-							isTemplateMode={ isTemplateMode }
-							contentRef={ contentRef }
-							styles={ styles }
-							style={ { paddingBottom } }
-						>
-							<AnimatePresence>
-								<motion.div
-									key={ isTemplateMode ? 'template' : 'post' }
-									initial={ { opacity: 0 } }
-									animate={ { opacity: 1 } }
-								>
-									<WritingFlow>
-										{ ! isTemplateMode && (
-											<div className="edit-post-visual-editor__post-title-wrapper">
-												<PostTitle />
-											</div>
-										) }
-										<BlockList
-											__experimentalLayout={
-												themeSupportsLayout
-													? {
-															type: 'default',
-															// Find a way to inject this in the support flag code (hooks).
-															alignments: themeSupportsLayout
-																? alignments
-																: undefined,
-													  }
-													: undefined
-											}
-										/>
-									</WritingFlow>
-								</motion.div>
-							</AnimatePresence>
-						</MaybeIframe>
-					</motion.div>
-				</BlockTools>
-			</div>
+						<AnimatePresence>
+							<motion.div
+								key={ isTemplateMode ? 'template' : 'post' }
+								initial={ { opacity: 0 } }
+								animate={ { opacity: 1 } }
+							>
+								<WritingFlow>
+									{ ! isTemplateMode && (
+										<div className="edit-post-visual-editor__post-title-wrapper">
+											<PostTitle />
+										</div>
+									) }
+									<BlockList
+										__experimentalLayout={
+											themeSupportsLayout
+												? {
+														type: 'default',
+														// Find a way to inject this in the support flag code (hooks).
+														alignments: themeSupportsLayout
+															? alignments
+															: undefined,
+												  }
+												: undefined
+										}
+									/>
+								</WritingFlow>
+							</motion.div>
+						</AnimatePresence>
+					</MaybeIframe>
+				</motion.div>
+			</BlockTools>
 			<__unstableBlockSettingsMenuFirstItem>
 				{ ( { onClose } ) => (
 					<BlockInspectorButton onClick={ onClose } />

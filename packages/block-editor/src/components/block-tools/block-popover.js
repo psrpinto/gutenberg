@@ -23,6 +23,7 @@ import BlockContextualToolbar from './block-contextual-toolbar';
 import Inserter from '../inserter';
 import { store as blockEditorStore } from '../../store';
 import { __unstableUseBlockElement as useBlockElement } from '../block-list/use-block-props/use-block-refs';
+import { usePopoverScroll } from './use-popover-scroll';
 
 function selector( select ) {
 	const {
@@ -52,6 +53,7 @@ function BlockPopover( {
 	isEmptyDefaultBlock,
 	capturingClientId,
 	__unstablePopoverSlot,
+	__unstableContentRef,
 } ) {
 	const {
 		isNavigationMode,
@@ -111,6 +113,8 @@ function BlockPopover( {
 	const selectedElement = useBlockElement( clientId );
 	const lastSelectedElement = useBlockElement( lastClientId );
 	const capturingElement = useBlockElement( capturingClientId );
+
+	const popoverScrollRef = usePopoverScroll( __unstableContentRef );
 
 	if (
 		! shouldShowBreadcrumb &&
@@ -189,64 +193,66 @@ function BlockPopover( {
 			__unstableObserveElement={ node }
 			shouldAnchorIncludePadding
 		>
-			{ ( shouldShowContextualToolbar || isToolbarForced ) && (
-				<div
-					onFocus={ onFocus }
-					onBlur={ onBlur }
-					// While ideally it would be enough to capture the
-					// bubbling focus event from the Inserter, due to the
-					// characteristics of click focusing of `button`s in
-					// Firefox and Safari, it is not reliable.
-					//
-					// See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#Clicking_and_focus
-					tabIndex={ -1 }
-					className={ classnames(
-						'block-editor-block-list__block-popover-inserter',
-						{
-							'is-visible': isInserterShown,
+			<div ref={ popoverScrollRef }>
+				{ ( shouldShowContextualToolbar || isToolbarForced ) && (
+					<div
+						onFocus={ onFocus }
+						onBlur={ onBlur }
+						// While ideally it would be enough to capture the
+						// bubbling focus event from the Inserter, due to the
+						// characteristics of click focusing of `button`s in
+						// Firefox and Safari, it is not reliable.
+						//
+						// See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#Clicking_and_focus
+						tabIndex={ -1 }
+						className={ classnames(
+							'block-editor-block-list__block-popover-inserter',
+							{
+								'is-visible': isInserterShown,
+							}
+						) }
+					>
+						<Inserter
+							clientId={ clientId }
+							rootClientId={ rootClientId }
+							__experimentalIsQuick
+						/>
+					</div>
+				) }
+				{ ( shouldShowContextualToolbar || isToolbarForced ) && (
+					<BlockContextualToolbar
+						// If the toolbar is being shown because of being forced
+						// it should focus the toolbar right after the mount.
+						focusOnMount={ isToolbarForced }
+						__experimentalInitialIndex={
+							initialToolbarItemIndexRef.current
 						}
-					) }
-				>
-					<Inserter
+						__experimentalOnIndexChange={ ( index ) => {
+							initialToolbarItemIndexRef.current = index;
+						} }
+						// Resets the index whenever the active block changes so
+						// this is not persisted. See https://github.com/WordPress/gutenberg/pull/25760#issuecomment-717906169
+						key={ clientId }
+					/>
+				) }
+				{ shouldShowBreadcrumb && (
+					<BlockSelectionButton
 						clientId={ clientId }
 						rootClientId={ rootClientId }
-						__experimentalIsQuick
+						blockElement={ node }
 					/>
-				</div>
-			) }
-			{ ( shouldShowContextualToolbar || isToolbarForced ) && (
-				<BlockContextualToolbar
-					// If the toolbar is being shown because of being forced
-					// it should focus the toolbar right after the mount.
-					focusOnMount={ isToolbarForced }
-					__experimentalInitialIndex={
-						initialToolbarItemIndexRef.current
-					}
-					__experimentalOnIndexChange={ ( index ) => {
-						initialToolbarItemIndexRef.current = index;
-					} }
-					// Resets the index whenever the active block changes so
-					// this is not persisted. See https://github.com/WordPress/gutenberg/pull/25760#issuecomment-717906169
-					key={ clientId }
-				/>
-			) }
-			{ shouldShowBreadcrumb && (
-				<BlockSelectionButton
-					clientId={ clientId }
-					rootClientId={ rootClientId }
-					blockElement={ node }
-				/>
-			) }
-			{ showEmptyBlockSideInserter && (
-				<div className="block-editor-block-list__empty-block-inserter">
-					<Inserter
-						position="bottom right"
-						rootClientId={ rootClientId }
-						clientId={ clientId }
-						__experimentalIsQuick
-					/>
-				</div>
-			) }
+				) }
+				{ showEmptyBlockSideInserter && (
+					<div className="block-editor-block-list__empty-block-inserter">
+						<Inserter
+							position="bottom right"
+							rootClientId={ rootClientId }
+							clientId={ clientId }
+							__experimentalIsQuick
+						/>
+					</div>
+				) }
+			</div>
 		</Popover>
 	);
 }
@@ -296,7 +302,10 @@ function wrapperSelector( select ) {
 	};
 }
 
-export default function WrappedBlockPopover( { __unstablePopoverSlot } ) {
+export default function WrappedBlockPopover( {
+	__unstablePopoverSlot,
+	__unstableContentRef,
+} ) {
 	const selected = useSelect( wrapperSelector, [] );
 
 	if ( ! selected ) {
@@ -324,6 +333,7 @@ export default function WrappedBlockPopover( { __unstablePopoverSlot } ) {
 			isEmptyDefaultBlock={ isEmptyDefaultBlock }
 			capturingClientId={ capturingClientId }
 			__unstablePopoverSlot={ __unstablePopoverSlot }
+			__unstableContentRef={ __unstableContentRef }
 		/>
 	);
 }

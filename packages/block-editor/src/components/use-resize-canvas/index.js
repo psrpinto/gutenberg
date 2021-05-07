@@ -61,9 +61,9 @@ export default function useResizeCanvas(
 			case 'Mobile':
 				return {
 					width: getCanvasWidth( device ),
-					margin: marginValue() + 'px auto',
+					margin: marginValue() + 'px auto ' + marginValue() + 'px',
 					height,
-					borderRadius: '2px',
+					borderRadius: '2px 2px 2px 2px',
 					border: '1px solid #ddd',
 					overflowY: 'auto',
 				};

@@ -16,6 +16,7 @@ import {
 } from '@wordpress/element';
 import { Popover } from '@wordpress/components';
 import { isRTL } from '@wordpress/i18n';
+import { useMergeRefs } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -23,10 +24,14 @@ import { isRTL } from '@wordpress/i18n';
 import Inserter from '../inserter';
 import { store as blockEditorStore } from '../../store';
 import { __unstableUseBlockElement as useBlockElement } from '../block-list/use-block-props/use-block-refs';
+import { usePopoverScroll } from './use-popover-scroll';
 
 export const InsertionPointOpenRef = createContext();
 
-function InsertionPointPopover( { __unstablePopoverSlot } ) {
+function InsertionPointPopover( {
+	__unstablePopoverSlot,
+	__unstableContentRef,
+} ) {
 	const { selectBlock } = useDispatch( blockEditorStore );
 	const openRef = useContext( InsertionPointOpenRef );
 	const ref = useRef();
@@ -161,6 +166,11 @@ function InsertionPointPopover( { __unstablePopoverSlot } ) {
 		};
 	}, [ previousElement, nextElement ] );
 
+	const mergedRefs = useMergeRefs( [
+		ref,
+		usePopoverScroll( __unstableContentRef ),
+	] );
+
 	if ( ! previousElement ) {
 		return null;
 	}
@@ -215,7 +225,7 @@ function InsertionPointPopover( { __unstablePopoverSlot } ) {
 			__unstableSlotName={ __unstablePopoverSlot || null }
 		>
 			<div
-				ref={ ref }
+				ref={ mergedRefs }
 				tabIndex={ -1 }
 				onClick={ onClick }
 				onFocus={ onFocus }
@@ -253,7 +263,11 @@ function InsertionPointPopover( { __unstablePopoverSlot } ) {
 	/* eslint-enable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
 }
 
-export default function InsertionPoint( { children } ) {
+export default function InsertionPoint( {
+	children,
+	__unstablePopoverSlot,
+	__unstableContentRef,
+} ) {
 	const isVisible = useSelect( ( select ) => {
 		const { isMultiSelecting, isBlockInsertionPointVisible } = select(
 			blockEditorStore
@@ -264,7 +278,12 @@ export default function InsertionPoint( { children } ) {
 
 	return (
 		<InsertionPointOpenRef.Provider value={ useRef( false ) }>
-			{ isVisible && <InsertionPointPopover /> }
+			{ isVisible && (
+				<InsertionPointPopover
+					__unstablePopoverSlot={ __unstablePopoverSlot }
+					__unstableContentRef={ __unstableContentRef }
+				/>
+			) }
 			{ children }
 		</InsertionPointOpenRef.Provider>
 	);
