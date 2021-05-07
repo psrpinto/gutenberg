@@ -20,28 +20,12 @@ import {
 import { __ } from '@wordpress/i18n';
 import { navigation, chevronDown, Icon } from '@wordpress/icons';
 import { store as coreStore } from '@wordpress/core-data';
-import { createDataTree, mapMenuItemsToBlocks } from '@wordpress/menus';
+import { convertMenuItemsToBlocks } from '@wordpress/menus';
 
 /**
  * Internal dependencies
  */
 import PlaceholderPreview from './placeholder-preview';
-
-/**
- * Convert a flat menu item structure to a nested blocks structure.
- *
- * @param {Object[]} menuItems An array of menu items.
- *
- * @return {WPBlock[]} An array of blocks.
- */
-function convertMenuItemsToBlocks( menuItems ) {
-	if ( ! menuItems ) {
-		return null;
-	}
-
-	const menuTree = createDataTree( menuItems );
-	return mapMenuItemsToBlocks( menuTree );
-}
 
 function NavigationPlaceholder( { onCreate }, ref ) {
 	const [ selectedMenu, setSelectedMenu ] = useState();

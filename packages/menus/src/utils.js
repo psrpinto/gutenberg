@@ -4,6 +4,22 @@
 import { createBlock, parse } from '@wordpress/blocks';
 
 /**
+ * Convert a flat menu item structure to a nested blocks structure.
+ *
+ * @param {Object[]} menuItems An array of menu items.
+ *
+ * @return {WPBlock[]} An array of blocks.
+ */
+export function convertMenuItemsToBlocks( menuItems ) {
+	if ( ! menuItems ) {
+		return null;
+	}
+
+	const menuTree = createDataTree( menuItems );
+	return mapMenuItemsToBlocks( menuTree );
+}
+
+/**
  * Creates a nested, hierarchical tree representation from unstructured data that
  * has an inherent relationship defined between individual items.
  *
