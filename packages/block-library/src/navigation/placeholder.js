@@ -20,12 +20,11 @@ import {
 import { __ } from '@wordpress/i18n';
 import { navigation, chevronDown, Icon } from '@wordpress/icons';
 import { store as coreStore } from '@wordpress/core-data';
+import { createDataTree, mapMenuItemsToBlocks } from '@wordpress/menus';
 
 /**
  * Internal dependencies
  */
-import createDataTree from './create-data-tree';
-import mapMenuItemsToBlocks from './map-menu-items-to-blocks';
 import PlaceholderPreview from './placeholder-preview';
 
 /**
