@@ -7,6 +7,7 @@ import { groupBy, sortBy } from 'lodash';
  * WordPress dependencies
  */
 import { parse, createBlock } from '@wordpress/blocks';
+import { menuItemToBlockAttributes } from '@wordpress/menus';
 
 /**
  * Internal dependencies
@@ -14,7 +15,7 @@ import { parse, createBlock } from '@wordpress/blocks';
 import { NAVIGATION_POST_KIND, NAVIGATION_POST_POST_TYPE } from '../constants';
 
 import { resolveMenuItems, dispatch } from './controls';
-import { buildNavigationPostId, menuItemToBlockAttributes } from './utils';
+import { buildNavigationPostId } from './utils';
 
 /**
  * Creates a "stub" navigation post reflecting the contents of menu with id=menuId. The

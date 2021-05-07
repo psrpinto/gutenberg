@@ -81,6 +81,8 @@ export function createDataTree( dataset, id = 'id', relation = 'parent' ) {
 /**
  * Convert block attributes to menu item.
  *
+ * Utilised in both block and editor.
+ *
  * @param {WPNavMenuItem} menuItem the menu item to be converted to block attributes.
  * @return {Object} the block attributes converted from the WPNavMenuItem item.
  */
