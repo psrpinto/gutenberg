@@ -16,7 +16,6 @@ import {
 } from '@wordpress/element';
 import { Popover } from '@wordpress/components';
 import { isRTL } from '@wordpress/i18n';
-import { useMergeRefs } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -166,10 +165,7 @@ function InsertionPointPopover( {
 		};
 	}, [ previousElement, nextElement ] );
 
-	const mergedRefs = useMergeRefs( [
-		ref,
-		usePopoverScroll( __unstableContentRef ),
-	] );
+	const popoverScrollRef = usePopoverScroll( __unstableContentRef );
 
 	if ( ! previousElement ) {
 		return null;
@@ -215,6 +211,7 @@ function InsertionPointPopover( {
 	// See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#Clicking_and_focus
 	return (
 		<Popover
+			ref={ popoverScrollRef }
 			noArrow
 			animate={ false }
 			getAnchorRect={ getAnchorRect }
@@ -225,7 +222,7 @@ function InsertionPointPopover( {
 			__unstableSlotName={ __unstablePopoverSlot || null }
 		>
 			<div
-				ref={ mergedRefs }
+				ref={ ref }
 				tabIndex={ -1 }
 				onClick={ onClick }
 				onFocus={ onFocus }

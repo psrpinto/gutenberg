@@ -13,7 +13,12 @@ import { useRefEffect } from '@wordpress/compose';
 export function usePopoverScroll( scrollableRef ) {
 	return useRefEffect(
 		( node ) => {
-			function onWheel( { deltaX, deltaY } ) {
+			if ( ! scrollableRef ) {
+				return;
+			}
+
+			function onWheel( event ) {
+				const { deltaX, deltaY } = event;
 				scrollableRef.current.scrollBy( deltaX, deltaY );
 			}
 			node.addEventListener( 'wheel', onWheel );

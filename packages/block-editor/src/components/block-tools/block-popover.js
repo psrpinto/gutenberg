@@ -178,6 +178,7 @@ function BlockPopover( {
 
 	return (
 		<Popover
+			ref={ popoverScrollRef }
 			noArrow
 			animate={ false }
 			position={ popoverPosition }
@@ -193,66 +194,64 @@ function BlockPopover( {
 			__unstableObserveElement={ node }
 			shouldAnchorIncludePadding
 		>
-			<div ref={ popoverScrollRef }>
-				{ ( shouldShowContextualToolbar || isToolbarForced ) && (
-					<div
-						onFocus={ onFocus }
-						onBlur={ onBlur }
-						// While ideally it would be enough to capture the
-						// bubbling focus event from the Inserter, due to the
-						// characteristics of click focusing of `button`s in
-						// Firefox and Safari, it is not reliable.
-						//
-						// See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#Clicking_and_focus
-						tabIndex={ -1 }
-						className={ classnames(
-							'block-editor-block-list__block-popover-inserter',
-							{
-								'is-visible': isInserterShown,
-							}
-						) }
-					>
-						<Inserter
-							clientId={ clientId }
-							rootClientId={ rootClientId }
-							__experimentalIsQuick
-						/>
-					</div>
-				) }
-				{ ( shouldShowContextualToolbar || isToolbarForced ) && (
-					<BlockContextualToolbar
-						// If the toolbar is being shown because of being forced
-						// it should focus the toolbar right after the mount.
-						focusOnMount={ isToolbarForced }
-						__experimentalInitialIndex={
-							initialToolbarItemIndexRef.current
+			{ ( shouldShowContextualToolbar || isToolbarForced ) && (
+				<div
+					onFocus={ onFocus }
+					onBlur={ onBlur }
+					// While ideally it would be enough to capture the
+					// bubbling focus event from the Inserter, due to the
+					// characteristics of click focusing of `button`s in
+					// Firefox and Safari, it is not reliable.
+					//
+					// See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#Clicking_and_focus
+					tabIndex={ -1 }
+					className={ classnames(
+						'block-editor-block-list__block-popover-inserter',
+						{
+							'is-visible': isInserterShown,
 						}
-						__experimentalOnIndexChange={ ( index ) => {
-							initialToolbarItemIndexRef.current = index;
-						} }
-						// Resets the index whenever the active block changes so
-						// this is not persisted. See https://github.com/WordPress/gutenberg/pull/25760#issuecomment-717906169
-						key={ clientId }
-					/>
-				) }
-				{ shouldShowBreadcrumb && (
-					<BlockSelectionButton
+					) }
+				>
+					<Inserter
 						clientId={ clientId }
 						rootClientId={ rootClientId }
-						blockElement={ node }
+						__experimentalIsQuick
 					/>
-				) }
-				{ showEmptyBlockSideInserter && (
-					<div className="block-editor-block-list__empty-block-inserter">
-						<Inserter
-							position="bottom right"
-							rootClientId={ rootClientId }
-							clientId={ clientId }
-							__experimentalIsQuick
-						/>
-					</div>
-				) }
-			</div>
+				</div>
+			) }
+			{ ( shouldShowContextualToolbar || isToolbarForced ) && (
+				<BlockContextualToolbar
+					// If the toolbar is being shown because of being forced
+					// it should focus the toolbar right after the mount.
+					focusOnMount={ isToolbarForced }
+					__experimentalInitialIndex={
+						initialToolbarItemIndexRef.current
+					}
+					__experimentalOnIndexChange={ ( index ) => {
+						initialToolbarItemIndexRef.current = index;
+					} }
+					// Resets the index whenever the active block changes so
+					// this is not persisted. See https://github.com/WordPress/gutenberg/pull/25760#issuecomment-717906169
+					key={ clientId }
+				/>
+			) }
+			{ shouldShowBreadcrumb && (
+				<BlockSelectionButton
+					clientId={ clientId }
+					rootClientId={ rootClientId }
+					blockElement={ node }
+				/>
+			) }
+			{ showEmptyBlockSideInserter && (
+				<div className="block-editor-block-list__empty-block-inserter">
+					<Inserter
+						position="bottom right"
+						rootClientId={ rootClientId }
+						clientId={ clientId }
+						__experimentalIsQuick
+					/>
+				</div>
+			) }
 		</Popover>
 	);
 }
