@@ -113,7 +113,6 @@ export default function VisualEditor( { styles } ) {
 		borderRadius: '2px 2px 0 0',
 		border: '1px solid #ddd',
 		borderBottom: 0,
-		margin: '36px auto 0',
 	};
 	const resizedCanvasStyles = useResizeCanvas( deviceType, isTemplateMode );
 	const defaultLayout = useEditorFeature( 'layout' );
@@ -151,14 +150,10 @@ export default function VisualEditor( { styles } ) {
 	const blockSelectionClearerRef = useBlockSelectionClearer( true );
 
 	return (
-		<motion.div
+		<div
 			className={ classnames( 'edit-post-visual-editor', {
 				'is-template-mode': isTemplateMode,
 			} ) }
-			animate={
-				isTemplateMode ? { padding: '48px 48px 0' } : { padding: 0 }
-			}
-			ref={ blockSelectionClearerRef }
 		>
 			{ themeSupportsLayout && (
 				<LayoutStyle
@@ -167,58 +162,66 @@ export default function VisualEditor( { styles } ) {
 				/>
 			) }
 			<VisualEditorGlobalKeyboardShortcuts />
-			{ isTemplateMode && (
-				<Button
-					className="edit-post-visual-editor__exit-template-mode"
-					icon={ arrowLeft }
-					onClick={ () => {
-						clearSelectedBlock();
-						setIsEditingTemplate( false );
-					} }
-				>
-					{ __( 'Back' ) }
-				</Button>
-			) }
 			<BlockTools __unstableContentRef={ ref }>
 				<motion.div
-					animate={ animatedStyles }
-					initial={ desktopCanvasStyles }
+					className="edit-post-visual-editor__content-area"
+					animate={ {
+						padding: isTemplateMode ? '48px 48px 0' : '0',
+					} }
+					ref={ blockSelectionClearerRef }
 				>
-					<MaybeIframe
-						isTemplateMode={ isTemplateMode }
-						contentRef={ contentRef }
-						styles={ styles }
-						style={ { paddingBottom } }
+					{ isTemplateMode && (
+						<Button
+							className="edit-post-visual-editor__exit-template-mode"
+							icon={ arrowLeft }
+							onClick={ () => {
+								clearSelectedBlock();
+								setIsEditingTemplate( false );
+							} }
+						>
+							{ __( 'Back' ) }
+						</Button>
+					) }
+					<motion.div
+						animate={ animatedStyles }
+						initial={ desktopCanvasStyles }
 					>
-						<AnimatePresence>
-							<motion.div
-								key={ isTemplateMode ? 'template' : 'post' }
-								initial={ { opacity: 0 } }
-								animate={ { opacity: 1 } }
-							>
-								<WritingFlow>
-									{ ! isTemplateMode && (
-										<div className="edit-post-visual-editor__post-title-wrapper">
-											<PostTitle />
-										</div>
-									) }
-									<BlockList
-										__experimentalLayout={
-											themeSupportsLayout
-												? {
-														type: 'default',
-														// Find a way to inject this in the support flag code (hooks).
-														alignments: themeSupportsLayout
-															? alignments
-															: undefined,
-												  }
-												: undefined
-										}
-									/>
-								</WritingFlow>
-							</motion.div>
-						</AnimatePresence>
-					</MaybeIframe>
+						<MaybeIframe
+							isTemplateMode={ isTemplateMode }
+							contentRef={ contentRef }
+							styles={ styles }
+							style={ { paddingBottom } }
+						>
+							<AnimatePresence>
+								<motion.div
+									key={ isTemplateMode ? 'template' : 'post' }
+									initial={ { opacity: 0 } }
+									animate={ { opacity: 1 } }
+								>
+									<WritingFlow>
+										{ ! isTemplateMode && (
+											<div className="edit-post-visual-editor__post-title-wrapper">
+												<PostTitle />
+											</div>
+										) }
+										<BlockList
+											__experimentalLayout={
+												themeSupportsLayout
+													? {
+															type: 'default',
+															// Find a way to inject this in the support flag code (hooks).
+															alignments: themeSupportsLayout
+																? alignments
+																: undefined,
+													  }
+													: undefined
+											}
+										/>
+									</WritingFlow>
+								</motion.div>
+							</AnimatePresence>
+						</MaybeIframe>
+					</motion.div>
 				</motion.div>
 			</BlockTools>
 			<__unstableBlockSettingsMenuFirstItem>
@@ -226,6 +229,6 @@ export default function VisualEditor( { styles } ) {
 					<BlockInspectorButton onClick={ onClose } />
 				) }
 			</__unstableBlockSettingsMenuFirstItem>
-		</motion.div>
+		</div>
 	);
 }

@@ -71,12 +71,8 @@
 	}
 }
 
-.is-template-mode .block-editor-block-contextual-toolbar.is-fixed {
-	// The same border as device preview and the template mode frame.
-	// Ideally this toolbar should stick to the top without the back button in
-	// between. Perhaps the back button should move to a different location.
-	// We can't move the back button under the toolbar becaus the the block
-	// toolbar should be tabbable directly from the content.
-	border: 1px solid #ddd;
-	border-radius: 2px;
+.edit-post-visual-editor__content-area {
+	width: 100%;
+	height: 100%;
+	position: relative;
 }
