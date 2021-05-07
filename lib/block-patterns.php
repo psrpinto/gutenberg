@@ -7,6 +7,8 @@
 
 // Register categories used for block patterns.
 register_block_pattern_category( 'query', array( 'label' => __( 'Query', 'gutenberg' ) ) );
+register_block_pattern_category( 'page-header', array( 'label' => __( 'Page Header', 'gutenberg' ) ) );
+register_block_pattern_category( 'page-footer', array( 'label' => __( 'Page Footer', 'gutenberg' ) ) );
 
 // Initial Query block patterns.
 register_block_pattern(
@@ -160,6 +162,210 @@ register_block_pattern(
 						<!-- /wp:column --></div>
 						<!-- /wp:columns --></main>
 						<!-- /wp:group -->',
+	)
+);
+
+// Initial Template Part block patterns.
+register_block_pattern(
+	'template-part/header-site-title-navigation',
+	array(
+		'title'      => __( 'Header with title and navigation', 'gutenberg' ),
+		'categories'    => array( 'page-header' ),
+		'blockTypes' => array( 'core/template-part/header' ),
+		'content'    => '<!-- wp:columns {"verticalAlignment":"center","align":"full","style":{"color":{"link":"#ffffff","text":"#ffffff","background":"#000000"}}} -->
+						<div class="wp-block-columns alignfull are-vertically-aligned-center has-text-color has-background has-link-color" style="--wp--style--color--link:#ffffff;background-color:#000000;color:#ffffff"><!-- wp:column {"verticalAlignment":"center","width":"33.33%"} -->
+						<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:33.33%"><!-- wp:site-title {"fontSize":"normal"} /--></div>
+						<!-- /wp:column -->
+						<!-- wp:column {"verticalAlignment":"center","width":"66.66%"} -->
+						<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:66.66%"><!-- wp:navigation {"orientation":"horizontal","itemsJustification":"right"} /--></div>
+						<!-- /wp:column --></div>
+						<!-- /wp:columns -->',
+	)
+);
+
+register_block_pattern(
+	'template-part/header-two-navigation-areas',
+	array(
+		'title'      => __( 'Header with two navigation areas and logo', 'gutenberg' ),
+		'categories'    => array( 'page-header' ),
+		'blockTypes' => array( 'core/template-part/header' ),
+		'content'    => '<!-- wp:columns {"verticalAlignment":"center","align":"full"} -->
+						<div class="wp-block-columns alignfull are-vertically-aligned-center"><!-- wp:column {"verticalAlignment":"center","width":"33.34%"} -->
+						<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:33.34%"><!-- wp:navigation {"orientation":"horizontal","itemsJustification":"right"} /--></div>
+						<!-- /wp:column -->
+						<!-- wp:column {"verticalAlignment":"center","width":"120px"} -->
+						<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:120px"><!-- wp:site-logo {"width":80,"className":"is-style-rounded"} /--></div>
+						<!-- /wp:column -->
+						<!-- wp:column {"verticalAlignment":"center","width":"33.33%"} -->
+						<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:33.33%"><!-- wp:navigation {"orientation":"horizontal","itemsJustification":"left"} /--></div>
+						<!-- /wp:column --></div>
+						<!-- /wp:columns -->',
+	)
+);
+
+register_block_pattern(
+	'template-part/header-with-social-links',
+	array(
+		'title'      => __( 'Header with social links', 'gutenberg' ),
+		'categories'    => array( 'page-header' ),
+		'blockTypes' => array( 'core/template-part/header' ),
+		'content'    => '<!-- wp:columns {"verticalAlignment":"center","align":"full","style":{"color":{"background":"#e7ecde"}}} -->
+						<div class="wp-block-columns alignfull are-vertically-aligned-center has-background" style="background-color:#e7ecde"><!-- wp:column {"verticalAlignment":"center","width":"33.33%"} -->
+						<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:33.33%"><!-- wp:navigation {"orientation":"horizontal","itemsJustification":"left"} /--></div>
+						<!-- /wp:column -->
+						<!-- wp:column {"verticalAlignment":"center","width":"33.33%"} -->
+						<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:33.33%"><!-- wp:heading {"textAlign":"center"} -->
+						<h2 class="has-text-align-center"><strong>Forestation</strong></h2>
+						<!-- /wp:heading --></div>
+						<!-- /wp:column -->
+						<!-- wp:column {"verticalAlignment":"center","width":"33.33%"} -->
+						<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:33.33%"><!-- wp:social-links {"iconColor":"black","iconColorValue":"#000000","customIconBackgroundColor":"#e7ecde","iconBackgroundColorValue":"#e7ecde"} -->
+						<ul class="wp-block-social-links has-icon-color has-icon-background-color items-justified-right"><!-- wp:social-link {"url":"#","service":"twitter"} /-->
+						<!-- wp:social-link {"url":"#","service":"instagram"} /-->
+						<!-- wp:social-link {"url":"#","service":"mail"} /--></ul>
+						<!-- /wp:social-links --></div>
+						<!-- /wp:column --></div>
+						<!-- /wp:columns -->',
+	)
+);
+
+register_block_pattern(
+	'template-part/header-large-image',
+	array(
+		'title'      => __( 'Header with large image', 'gutenberg' ),
+		'categories'    => array( 'page-header' ),
+		'blockTypes' => array( 'core/template-part/header' ),
+		'content'    => '<!-- wp:cover {"url":"https://s.w.org/images/core/5.8/forest.jpg","id":2613,"minHeight":600,"contentPosition":"center center","align":"full"} -->
+						<div class="wp-block-cover alignfull has-background-dim" style="min-height:600px"><img class="wp-block-cover__image-background wp-image-2613" alt="" src="https://s.w.org/images/core/5.8/forest.jpg" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:columns {"align":"wide"} -->
+						<div class="wp-block-columns alignwide"><!-- wp:column {"verticalAlignment":"center"} -->
+						<div class="wp-block-column is-vertically-aligned-center"><!-- wp:heading {"level":1,"style":{"typography":{"lineHeight":"1.2"}},"fontSize":"normal"} -->
+						<h1 class="has-normal-font-size" style="line-height:1.2">Forestation</h1>
+						<!-- /wp:heading --></div>
+						<!-- /wp:column -->
+						<!-- wp:column -->
+						<div class="wp-block-column"><!-- wp:navigation {"orientation":"horizontal","itemsJustification":"right","fontSize":"normal"} /--></div>
+						<!-- /wp:column --></div>
+						<!-- /wp:columns -->
+						<!-- wp:spacer {"height":400} -->
+						<div style="height:400px" aria-hidden="true" class="wp-block-spacer"></div>
+						<!-- /wp:spacer -->
+						<!-- wp:columns {"align":"wide"} -->
+						<div class="wp-block-columns alignwide"><!-- wp:column {"width":"75%"} -->
+						<div class="wp-block-column" style="flex-basis:75%"><!-- wp:heading {"style":{"typography":{"fontSize":"48px"}}} -->
+						<h2 style="font-size:48px">A stable climate, a sustainable diverse life, and a source of culture.</h2>
+						<!-- /wp:heading -->
+						<!-- wp:button {"style":{"color":{"text":"#000000","background":"#ffffff"},"border":{"radius":0}}} -->
+						<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background no-border-radius" href="#" style="background-color:#ffffff;color:#000000">Learn more</a></div>
+						<!-- /wp:button --></div>
+						<!-- /wp:buttons --></div>
+						<!-- /wp:column -->
+						<!-- wp:column -->
+						<div class="wp-block-column"></div>
+						<!-- /wp:column --></div>
+						<!-- /wp:columns --></div></div>
+						<!-- /wp:cover -->',
+	)
+);
+
+register_block_pattern(
+	'template-part/footer-navigation-credit',
+	array(
+		'title'      => __( 'Footer with navigation and credit line', 'gutenberg' ),
+		'categories'    => array( 'page-footer' ),
+		'blockTypes' => array( 'core/template-part/footer' ),
+		'content'    => '<!-- wp:columns {"align":"full","style":{"color":{"background":"#000000","text":"#ffffff"}}} -->
+						<div class="wp-block-columns alignfull has-text-color has-background" style="background-color:#000000;color:#ffffff"><!-- wp:column -->
+						<div class="wp-block-column"><!-- wp:navigation {"orientation":"horizontal","fontSize":"normal"} /--></div>
+						<!-- /wp:column -->
+						<!-- wp:column -->
+						<div class="wp-block-column"><!-- wp:paragraph {"align":"right","fontSize":"normal"} -->
+						<p class="has-text-align-right has-normal-font-size">Proudly powered by WordPress</p>
+						<!-- /wp:paragraph --></div>
+						<!-- /wp:column --></div>
+						<!-- /wp:columns -->',
+	)
+);
+
+register_block_pattern(
+	'template-part/footer-centered-navigation',
+	array(
+		'title'      => __( 'Centered footer with navigation', 'gutenberg' ),
+		'categories'    => array( 'page-footer' ),
+		'blockTypes' => array( 'core/template-part/footer' ),
+		'content'    => '<!-- wp:navigation {"orientation":"horizontal","fontSize":"normal"} /-->
+						<!-- wp:spacer {"height":10} -->
+						<div style="height:10px" aria-hidden="true" class="wp-block-spacer"></div>
+						<!-- /wp:spacer -->
+						<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"16px"}}} -->
+						<p class="has-text-align-center" style="font-size:16px">Powered by WordPress</p>
+						<!-- /wp:paragraph -->
+						<!-- /wp:paragraph -->',
+	)
+);
+
+register_block_pattern(
+	'template-part/footer-latest-posts',
+	array(
+		'title'      => __( 'Footer with latest posts', 'gutenberg' ),
+		'categories'    => array( 'page-footer' ),
+		'blockTypes' => array( 'core/template-part/footer' ),
+		'content'    => '<!-- wp:group {"align":"full","style":{"color":{"background":"#e7ecde"}}} -->
+						<div class="wp-block-group alignfull has-background" style="background-color:#e7ecde"><!-- wp:spacer {"height":10} -->
+						<div style="height:10px" aria-hidden="true" class="wp-block-spacer"></div>
+						<!-- /wp:spacer -->
+						<!-- wp:latest-posts {"postsToShow":3,"displayPostContent":true,"excerptLength":12,"postLayout":"grid","displayFeaturedImage":true,"featuredImageSizeWidth":150,"featuredImageSizeHeight":150,"addLinkToFeaturedImage":true} /-->
+						<!-- wp:spacer {"height":20} -->
+						<div style="height:20px" aria-hidden="true" class="wp-block-spacer"></div>
+						<!-- /wp:spacer -->
+						<!-- wp:columns {"verticalAlignment":"bottom","align":"wide"} -->
+						<div class="wp-block-columns alignwide are-vertically-aligned-bottom"><!-- wp:column {"verticalAlignment":"bottom","width":"33.33%"} -->
+						<div class="wp-block-column is-vertically-aligned-bottom" style="flex-basis:33.33%"><!-- wp:heading {"fontSize":"large"} -->
+						<h2 class="has-large-font-size"><strong>Forestation</strong></h2>
+						<!-- /wp:heading --></div>
+						<!-- /wp:column -->
+						<!-- wp:column {"verticalAlignment":"bottom","width":"66.67%"} -->
+						<div class="wp-block-column is-vertically-aligned-bottom" style="flex-basis:66.67%"><!-- wp:paragraph {"align":"right","fontSize":"extra-small"} -->
+						<p class="has-text-align-right has-extra-small-font-size">© 2021 Nature, The Earth</p>
+						<!-- /wp:paragraph --></div>
+						<!-- /wp:column --></div>
+						<!-- /wp:columns -->
+						<!-- wp:spacer {"height":10} -->
+						<div style="height:10px" aria-hidden="true" class="wp-block-spacer"></div>
+						<!-- /wp:spacer --></div>
+						<!-- /wp:group -->',
+	)
+);
+
+register_block_pattern(
+	'template-part/footer-modern',
+	array(
+		'title'      => __( 'Modern footer with description and logo', 'gutenberg' ),
+		'categories'    => array( 'page-footer' ),
+		'blockTypes' => array( 'core/template-part/footer' ),
+		'content'    => '<!-- wp:columns {"align":"full","style":{"color":{"background":"#f8f4e4"}}} -->
+						<div class="wp-block-columns alignfull has-background" style="background-color:#f8f4e4"><!-- wp:column {"width":"33%"} -->
+						<div class="wp-block-column" style="flex-basis:33%"><!-- wp:paragraph -->
+						<p><strong>ABOUT US</strong></p>
+						<!-- /wp:paragraph -->
+						<!-- wp:paragraph -->
+						<p>Shape &amp; Form has been around since 2003. Its current iteration includes a photography <a href="#">blog</a>, an <a href="#">art gallery</a> dedicated to found geometric shapes, and a <a href="#">store</a> that sells t-shirts.</p>
+						<!-- /wp:paragraph -->
+						<!-- wp:spacer {"height":200} -->
+						<div style="height:200px" aria-hidden="true" class="wp-block-spacer"></div>
+						<!-- /wp:spacer -->
+						<!-- wp:paragraph {"fontSize":"extra-small"} -->
+						<p class="has-extra-small-font-size">© Shape &amp; Form</p>
+						<!-- /wp:paragraph --></div>
+						<!-- /wp:column -->
+						<!-- wp:column {"width":"33.33%"} -->
+						<div class="wp-block-column" style="flex-basis:33.33%"></div>
+						<!-- /wp:column -->
+						<!-- wp:column {"verticalAlignment":"bottom","width":"33.33%"} -->
+						<div class="wp-block-column is-vertically-aligned-bottom" style="flex-basis:33.33%"><!-- wp:image {"align":"right","id":3028,"width":36,"height":36,"sizeSlug":"large","linkDestination":"none"} -->
+						<div class="wp-block-image"><figure class="alignright size-large is-resized"><img src="https://gutenberg.test/wp-content/uploads/2021/05/Group-5.png" alt="" class="wp-image-3028" width="36" height="36"/></figure></div>
+						<!-- /wp:image --></div>
+						<!-- /wp:column --></div>
+						<!-- /wp:columns -->',
 	)
 );
 
