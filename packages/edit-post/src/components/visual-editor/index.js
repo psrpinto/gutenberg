@@ -58,7 +58,7 @@ function MaybeIframe( {
 				<div
 					ref={ contentRef }
 					className="editor-styles-wrapper"
-					style={ { width: '100%', height: '100%', ...style } }
+					style={ style }
 				>
 					{ children }
 				</div>
@@ -107,12 +107,6 @@ export default function VisualEditor( { styles } ) {
 		display: 'flex',
 		flexFlow: 'column',
 	};
-	const templateModeStyles = {
-		...desktopCanvasStyles,
-		borderRadius: '2px 2px 0 0',
-		border: '1px solid #ddd',
-		borderBottom: 0,
-	};
 	const resizedCanvasStyles = useResizeCanvas( deviceType, isTemplateMode );
 	const defaultLayout = useEditorFeature( 'layout' );
 	const { contentSize, wideSize } = defaultLayout || {};
@@ -121,12 +115,9 @@ export default function VisualEditor( { styles } ) {
 			? [ 'wide', 'full' ]
 			: [ 'left', 'center', 'right' ];
 
-	let animatedStyles = isTemplateMode
-		? templateModeStyles
+	const animatedStyles = resizedCanvasStyles
+		? resizedCanvasStyles
 		: desktopCanvasStyles;
-	if ( resizedCanvasStyles ) {
-		animatedStyles = resizedCanvasStyles;
-	}
 
 	let paddingBottom;
 
@@ -190,49 +181,54 @@ export default function VisualEditor( { styles } ) {
 					{ __( 'Back' ) }
 				</Button>
 			) }
-			<motion.div
+			<div
+				className="edit-post-visual-editor__block-tools-wrapper"
 				ref={ toolWrapperRef }
-				animate={ animatedStyles }
-				initial={ desktopCanvasStyles }
 			>
 				<BlockTools>
-					<MaybeIframe
-						isTemplateMode={ isTemplateMode }
-						contentRef={ contentRef }
-						styles={ styles }
-						style={ { paddingBottom } }
+					<motion.div
+						ref={ toolWrapperRef }
+						animate={ animatedStyles }
+						initial={ desktopCanvasStyles }
 					>
-						<AnimatePresence>
-							<motion.div
-								key={ isTemplateMode ? 'template' : 'post' }
-								initial={ { opacity: 0 } }
-								animate={ { opacity: 1 } }
-							>
-								<WritingFlow>
-									{ ! isTemplateMode && (
-										<div className="edit-post-visual-editor__post-title-wrapper">
-											<PostTitle />
-										</div>
-									) }
-									<BlockList
-										__experimentalLayout={
-											themeSupportsLayout
-												? {
-														type: 'default',
-														// Find a way to inject this in the support flag code (hooks).
-														alignments: themeSupportsLayout
-															? alignments
-															: undefined,
-												  }
-												: undefined
-										}
-									/>
-								</WritingFlow>
-							</motion.div>
-						</AnimatePresence>
-					</MaybeIframe>
+						<MaybeIframe
+							isTemplateMode={ isTemplateMode }
+							contentRef={ contentRef }
+							styles={ styles }
+							style={ { paddingBottom } }
+						>
+							<AnimatePresence>
+								<motion.div
+									key={ isTemplateMode ? 'template' : 'post' }
+									initial={ { opacity: 0 } }
+									animate={ { opacity: 1 } }
+								>
+									<WritingFlow>
+										{ ! isTemplateMode && (
+											<div className="edit-post-visual-editor__post-title-wrapper">
+												<PostTitle />
+											</div>
+										) }
+										<BlockList
+											__experimentalLayout={
+												themeSupportsLayout
+													? {
+															type: 'default',
+															// Find a way to inject this in the support flag code (hooks).
+															alignments: themeSupportsLayout
+																? alignments
+																: undefined,
+													  }
+													: undefined
+											}
+										/>
+									</WritingFlow>
+								</motion.div>
+							</AnimatePresence>
+						</MaybeIframe>
+					</motion.div>
 				</BlockTools>
-			</motion.div>
+			</div>
 			<__unstableBlockSettingsMenuFirstItem>
 				{ ( { onClose } ) => (
 					<BlockInspectorButton onClick={ onClose } />
