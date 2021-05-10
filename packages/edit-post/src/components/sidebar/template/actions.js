@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { kebabCase } from 'lodash';
+import { kebabCase, pickBy } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -28,23 +28,29 @@ import { createBlock, serialize } from '@wordpress/blocks';
 function PostTemplateActions() {
 	const [ isModalOpen, setIsModalOpen ] = useState( false );
 	const [ title, setTitle ] = useState( '' );
-	const { template, supportsTemplateMode } = useSelect( ( select ) => {
-		const { getCurrentPostType } = select( editorStore );
-		const { getPostType } = select( coreStore );
-		const { getEditedPostTemplate } = select( editPostStore );
+	const { template, supportsTemplateMode, editorSettings } = useSelect(
+		( select ) => {
+			const { getCurrentPostType } = select( editorStore );
+			const { getPostType } = select( coreStore );
+			const { getEditedPostTemplate } = select( editPostStore );
+			const settings = select( editorStore ).getEditorSettings();
 
-		const isViewable =
-			getPostType( getCurrentPostType() )?.viewable ?? false;
-		const _supportsTemplateMode =
-			select( editorStore ).getEditorSettings().supportsTemplateMode &&
-			isViewable;
+			const isViewable =
+				getPostType( getCurrentPostType() )?.viewable ?? false;
+			const _supportsTemplateMode =
+				settings.supportsTemplateMode && isViewable;
 
-		return {
-			template: _supportsTemplateMode && getEditedPostTemplate(),
-			supportsTemplateMode: _supportsTemplateMode,
-		};
-	}, [] );
+			return {
+				template: _supportsTemplateMode && getEditedPostTemplate(),
+				supportsTemplateMode: _supportsTemplateMode,
+				editorSettings: settings,
+			};
+		},
+		[]
+	);
 	const { __unstableSwitchToTemplateMode } = useDispatch( editPostStore );
+	const { deleteEntityRecord } = useDispatch( 'core' );
+	const { updateEditorSettings, editPost } = useDispatch( editorStore );
 
 	if ( ! supportsTemplateMode ) {
 		return null;
@@ -53,6 +59,43 @@ function PostTemplateActions() {
 	return (
 		<>
 			<div className="edit-post-template__actions">
+				{ !! ( template && template.wp_id ) && (
+					<Button
+						isLink
+						isDestructive
+						onClick={ () => {
+							if (
+								// eslint-disable-next-line no-alert
+								window.confirm(
+									__(
+										'Are you sure you want to delete this template? It may be currently in use by other pages or posts.'
+									)
+								)
+							) {
+								editPost( {
+									template: '',
+								} );
+								const newAvailableTemplates = pickBy(
+									editorSettings.availableTemplates,
+									( _title, id ) => {
+										return id !== template.slug;
+									}
+								);
+								updateEditorSettings( {
+									...editorSettings,
+									availableTemplates: newAvailableTemplates,
+								} );
+								deleteEntityRecord(
+									'postType',
+									'wp_template',
+									template.id
+								);
+							}
+						} }
+					>
+						{ __( 'Delete' ) }
+					</Button>
+				) }
 				{ !! template && (
 					<Button
 						isLink
