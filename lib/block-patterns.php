@@ -214,9 +214,7 @@ register_block_pattern(
 						<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:33.33%"><!-- wp:navigation {"orientation":"horizontal","itemsJustification":"left"} /--></div>
 						<!-- /wp:column -->
 						<!-- wp:column {"verticalAlignment":"center","width":"33.33%"} -->
-						<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:33.33%"><!-- wp:heading {"textAlign":"center"} -->
-						<h2 class="has-text-align-center"><strong>Forestation</strong></h2>
-						<!-- /wp:heading --></div>
+						<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:33.33%"><!-- wp:site-title {"textAlign":"center"} /--></div>
 						<!-- /wp:column -->
 						<!-- wp:column {"verticalAlignment":"center","width":"33.33%"} -->
 						<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:33.33%"><!-- wp:social-links {"iconColor":"black","iconColorValue":"#000000","customIconBackgroundColor":"#e7ecde","iconBackgroundColorValue":"#e7ecde"} -->
@@ -238,31 +236,33 @@ register_block_pattern(
 		'content'    => '<!-- wp:cover {"url":"https://s.w.org/images/core/5.8/forest.jpg","id":2613,"minHeight":600,"contentPosition":"center center","align":"full"} -->
 						<div class="wp-block-cover alignfull has-background-dim" style="min-height:600px"><img class="wp-block-cover__image-background wp-image-2613" alt="" src="https://s.w.org/images/core/5.8/forest.jpg" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:columns {"align":"wide"} -->
 						<div class="wp-block-columns alignwide"><!-- wp:column {"verticalAlignment":"center"} -->
-						<div class="wp-block-column is-vertically-aligned-center"><!-- wp:heading {"level":1,"style":{"typography":{"lineHeight":"1.2"}},"fontSize":"normal"} -->
-						<h1 class="has-normal-font-size" style="line-height:1.2">Forestation</h1>
-						<!-- /wp:heading --></div>
+						<div class="wp-block-column is-vertically-aligned-center"><!-- wp:site-title {"style":{"color":{"link":"#ffffff"}}} /--></div>
 						<!-- /wp:column -->
+
 						<!-- wp:column -->
 						<div class="wp-block-column"><!-- wp:navigation {"orientation":"horizontal","itemsJustification":"right","fontSize":"normal"} /--></div>
 						<!-- /wp:column --></div>
 						<!-- /wp:columns -->
+
 						<!-- wp:spacer {"height":400} -->
 						<div style="height:400px" aria-hidden="true" class="wp-block-spacer"></div>
 						<!-- /wp:spacer -->
+
 						<!-- wp:columns {"align":"wide"} -->
 						<div class="wp-block-columns alignwide"><!-- wp:column {"width":"75%"} -->
 						<div class="wp-block-column" style="flex-basis:75%"><!-- wp:heading {"style":{"typography":{"fontSize":"48px"}}} -->
-						<h2 style="font-size:48px">A stable climate, a sustainable diverse life, and a source of culture.</h2>
+						<h2 style="font-size:48px">' . esc_html__( 'A stable climate, a sustainable diverse life, and a source of culture.', 'default' ) . '</h2>
 						<!-- /wp:heading -->
+
 						<!-- wp:button {"style":{"color":{"text":"#000000","background":"#ffffff"},"border":{"radius":0}}} -->
-						<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background no-border-radius" href="#" style="background-color:#ffffff;color:#000000">Learn more</a></div>
+						<div class="wp-block-button"><a class="wp-block-button__link has-text-color has-background no-border-radius" href="#" style="background-color:#ffffff;color:#000000">' . esc_html__( 'Learn more.', 'default' ) . '</a></div>
 						<!-- /wp:button --></div>
-						<!-- /wp:buttons --></div>
-						<!-- /wp:column -->
+						<!-- /wp:column --></div>
+						<!-- /wp:columns -->
+
 						<!-- wp:column -->
 						<div class="wp-block-column"></div>
-						<!-- /wp:column --></div>
-						<!-- /wp:columns --></div></div>
+						<!-- /wp:column --></div></div>
 						<!-- /wp:cover -->',
 	)
 );
@@ -279,7 +279,7 @@ register_block_pattern(
 						<!-- /wp:column -->
 						<!-- wp:column -->
 						<div class="wp-block-column"><!-- wp:paragraph {"align":"right","fontSize":"normal"} -->
-						<p class="has-text-align-right has-normal-font-size">Proudly powered by WordPress</p>
+						<p class="has-text-align-right has-normal-font-size">' . esc_html__( 'Proudly powered by WordPress', 'default' ) . '</p>
 						<!-- /wp:paragraph --></div>
 						<!-- /wp:column --></div>
 						<!-- /wp:columns -->',
@@ -297,7 +297,7 @@ register_block_pattern(
 						<div style="height:10px" aria-hidden="true" class="wp-block-spacer"></div>
 						<!-- /wp:spacer -->
 						<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"16px"}}} -->
-						<p class="has-text-align-center" style="font-size:16px">Powered by WordPress</p>
+						<p class="has-text-align-center" style="font-size:16px">' . esc_html__( 'Powered by WordPress', 'default' ) . '</p>
 						<!-- /wp:paragraph -->
 						<!-- /wp:paragraph -->',
 	)
@@ -319,13 +319,11 @@ register_block_pattern(
 						<!-- /wp:spacer -->
 						<!-- wp:columns {"verticalAlignment":"bottom","align":"wide"} -->
 						<div class="wp-block-columns alignwide are-vertically-aligned-bottom"><!-- wp:column {"verticalAlignment":"bottom","width":"33.33%"} -->
-						<div class="wp-block-column is-vertically-aligned-bottom" style="flex-basis:33.33%"><!-- wp:heading {"fontSize":"large"} -->
-						<h2 class="has-large-font-size"><strong>Forestation</strong></h2>
-						<!-- /wp:heading --></div>
+						<div class="wp-block-column is-vertically-aligned-bottom" style="flex-basis:33.33%"><!-- wp:site-title {"fontSize":"large"} /--></div>
 						<!-- /wp:column -->
 						<!-- wp:column {"verticalAlignment":"bottom","width":"66.67%"} -->
 						<div class="wp-block-column is-vertically-aligned-bottom" style="flex-basis:66.67%"><!-- wp:paragraph {"align":"right","fontSize":"extra-small"} -->
-						<p class="has-text-align-right has-extra-small-font-size">© 2021 Nature, The Earth</p>
+						<p class="has-text-align-right has-extra-small-font-size">' . esc_html__( '© 2021 Nature, The Earth', 'default' ) . '</p>
 						<!-- /wp:paragraph --></div>
 						<!-- /wp:column --></div>
 						<!-- /wp:columns -->
@@ -348,13 +346,13 @@ register_block_pattern(
 						<p><strong>ABOUT US</strong></p>
 						<!-- /wp:paragraph -->
 						<!-- wp:paragraph -->
-						<p>Shape &amp; Form has been around since 2003. Its current iteration includes a photography <a href="#">blog</a>, an <a href="#">art gallery</a> dedicated to found geometric shapes, and a <a href="#">store</a> that sells t-shirts.</p>
+						<p>' . esc_html__( 'Shape & Form has been around since 2003. Its current iteration includes a photography blog, an art gallery dedicated to found geometric shapes, and a store that sells t-shirts.', 'default' ) . '</p>
 						<!-- /wp:paragraph -->
 						<!-- wp:spacer {"height":200} -->
 						<div style="height:200px" aria-hidden="true" class="wp-block-spacer"></div>
 						<!-- /wp:spacer -->
 						<!-- wp:paragraph {"fontSize":"extra-small"} -->
-						<p class="has-extra-small-font-size">© Shape &amp; Form</p>
+						<p class="has-extra-small-font-size">' . esc_html__( '© Shape & Form', 'default' ) . '</p>
 						<!-- /wp:paragraph --></div>
 						<!-- /wp:column -->
 						<!-- wp:column {"width":"33.33%"} -->
@@ -362,7 +360,7 @@ register_block_pattern(
 						<!-- /wp:column -->
 						<!-- wp:column {"verticalAlignment":"bottom","width":"33.33%"} -->
 						<div class="wp-block-column is-vertically-aligned-bottom" style="flex-basis:33.33%"><!-- wp:image {"align":"right","id":3028,"width":36,"height":36,"sizeSlug":"large","linkDestination":"none"} -->
-						<div class="wp-block-image"><figure class="alignright size-large is-resized"><img src="https://gutenberg.test/wp-content/uploads/2021/05/Group-5.png" alt="" class="wp-image-3028" width="36" height="36"/></figure></div>
+						<div class="wp-block-image"><figure class="alignright size-large is-resized"><img src="https://s.w.org/images/core/5.8/architecture-04.jpg" alt="' . esc_html__( 'Photo of curved lines found', 'default' ) . '" class="wp-image-3028" width="36" height="36"/></figure></div>
 						<!-- /wp:image --></div>
 						<!-- /wp:column --></div>
 						<!-- /wp:columns -->',
