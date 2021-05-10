@@ -359,9 +359,7 @@ register_block_pattern(
 						<div class="wp-block-column" style="flex-basis:33.33%"></div>
 						<!-- /wp:column -->
 						<!-- wp:column {"verticalAlignment":"bottom","width":"33.33%"} -->
-						<div class="wp-block-column is-vertically-aligned-bottom" style="flex-basis:33.33%"><!-- wp:image {"align":"right","id":3028,"width":36,"height":36,"sizeSlug":"large","linkDestination":"none"} -->
-						<div class="wp-block-image"><figure class="alignright size-large is-resized"><img src="https://s.w.org/images/core/5.8/architecture-04.jpg" alt="' . esc_html__( 'Photo of curved lines found', 'default' ) . '" class="wp-image-3028" width="36" height="36"/></figure></div>
-						<!-- /wp:image --></div>
+						<div class="wp-block-column is-vertically-aligned-bottom" style="flex-basis:33.33%"><!-- wp:site-logo {"align":"right","width":40} /--></div>
 						<!-- /wp:column --></div>
 						<!-- /wp:columns -->',
 	)
